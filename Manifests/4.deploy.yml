@@ -6,6 +6,8 @@ metadata:
   namespace: webapps
 spec:
   replicas: 2
+  strategy:
+    type: Recreate
   selector:
     matchLabels:
       app: yelp-camp
