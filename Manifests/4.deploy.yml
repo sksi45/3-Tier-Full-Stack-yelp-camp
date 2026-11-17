@@ -1,7 +1,9 @@
+
 apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: yelp-camp-deployment
+  namespace: webapps
 spec:
   replicas: 2
   selector:
@@ -12,7 +14,7 @@ spec:
       labels:
         app: yelp-camp
     spec:
-            affinity:
+      affinity:
         podAntiAffinity:
           preferredDuringSchedulingIgnoredDuringExecution:
             - weight: 100
@@ -21,17 +23,14 @@ spec:
                   matchLabels:
                     app: yelp-camp
                 topologyKey: kubernetes.io/hostname
-
       containers:
         - name: yelp-camp-container
           image: iiisks777/appimage:latest
           ports:
             - containerPort: 3000
-
           envFrom:
             - secretRef:
                 name: yelp-camp-secrets
-
           resources:
             requests:
               cpu: "200m"
@@ -39,7 +38,6 @@ spec:
             limits:
               cpu: "500m"
               memory: "512Mi"
-
           readinessProbe:
             httpGet:
               path: /
@@ -47,7 +45,6 @@ spec:
             initialDelaySeconds: 20
             periodSeconds: 10
             timeoutSeconds: 5
-
           livenessProbe:
             httpGet:
               path: /
