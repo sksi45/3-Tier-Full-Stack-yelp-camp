@@ -14,15 +14,6 @@ spec:
       labels:
         app: yelp-camp
     spec:
-      affinity:
-        podAntiAffinity:
-          preferredDuringSchedulingIgnoredDuringExecution:
-            - weight: 100
-              podAffinityTerm:
-                labelSelector:
-                  matchLabels:
-                    app: yelp-camp
-                topologyKey: kubernetes.io/hostname
       containers:
         - name: yelp-camp-container
           image: iiisks777/appimage:latest
